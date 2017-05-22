@@ -1,1 +1,2 @@
-# uvms-ci-test
+# minimaven
+Mini maven project
