@@ -11,7 +11,7 @@
 
     <groupId>fish.focus.uvms.ci</groupId>
     <artifactId>uvms-ci-test</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
     <packaging>war</packaging>
     
     <scm>
