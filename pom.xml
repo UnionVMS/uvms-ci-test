@@ -11,7 +11,7 @@
 
     <groupId>fish.focus.uvms.ci</groupId>
     <artifactId>uvms-ci-test</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <packaging>war</packaging>
     
     <scm>
@@ -64,6 +64,8 @@
                     <flowInitContext>
                         <developBranchName>dev</developBranchName>
                     </flowInitContext>
+                    <username>${git.user}</username>
+                    <password>${git.password}</password>
                 </configuration>
             </plugin>
             
