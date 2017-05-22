@@ -64,6 +64,8 @@
                     <flowInitContext>
                         <developBranchName>dev</developBranchName>
                     </flowInitContext>
+                    <username>${git.user}</username>
+                    <password>${git.password}</password>
                 </configuration>
             </plugin>
             
