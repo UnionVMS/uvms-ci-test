@@ -18,7 +18,10 @@
         <connection>scm:git:https://github.com/UnionVMS/uvms-ci-test.git</connection>
         <tag>HEAD</tag>
     </scm>
-
+    <properties>
+        <docker.dev.start.phase>test-compile</docker.dev.start.phase>
+        <docker.dev.prestop.phase>validate</docker.dev.prestop.phase>
+    </properties>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -107,7 +110,7 @@
                     <plugin>
                         <groupId>io.fabric8</groupId>
                         <artifactId>docker-maven-plugin</artifactId>
-                        <version>0.20.1</version>
+                        <version>0.21.0</version>
                         <executions>
                             <execution>
                                 <id>verifyallstopped</id>
@@ -151,8 +154,13 @@
                                             <port>8787:8787</port>
                                         </ports>
                                         <wait>
-                                            <log>WildFly 8.2.0.Final "Tweek" started in</log>
-                                            <time>300000</time>
+                                            <http>
+                                                <url>http://localhost:9990</url>
+                                                <method>GET</method>
+                                                <status>200..399</status>
+                                            </http>
+                                            <!--log>WildFly 8.2.0.Final "Tweek" started in</log-->
+                                            <time>6000</time>
                                             <kill>5000</kill>
                                             <shutdown>5000</shutdown>
                                         </wait>
