@@ -107,7 +107,7 @@
                         <artifactId>docker-maven-plugin</artifactId>
                         <version>0.21.0</version>
 
-                        <configuration  combine.self="override">
+                        <configuration combine.self="override">
                             <images>
                                 <image>
                                     <alias>wildfly</alias>
