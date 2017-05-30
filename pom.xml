@@ -20,7 +20,6 @@
     </scm>
     <properties>
         <docker.dev.start.phase>pre-integration-test</docker.dev.start.phase>
-        <docker.dev.prestop.phase>post-integration-test</docker.dev.prestop.phase>
         <docker.dev.stop.phase>post-integration-test</docker.dev.stop.phase>
     </properties>
     <dependencyManagement>
@@ -93,43 +92,15 @@
 
     <profiles>
         <profile>
-            <id>docker2</id>
+            <id>docker</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>io.fabric8</groupId>
                         <artifactId>docker-maven-plugin</artifactId>
                         <version>0.21.0</version>
-                        <executions>
-                            <execution>
-                                <id>verifyallstopped</id>
-                                <phase>${docker.dev.prestop.phase}</phase>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                                <configuration>
-                                    <allContainers>true</allContainers>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>start</id>
-                                <phase>${docker.dev.start.phase}</phase>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>stop</id>
-                                <phase>${docker.dev.stop.phase}</phase>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                                <configuration>
-                                    <allContainers>true</allContainers>
-                                </configuration>
-                            </execution>
-                        </executions>
-                        <configuration>
+
+                        <configuration  combine.self="override">
                             <images>
                                 <image>
                                     <alias>wildfly</alias>
