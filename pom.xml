@@ -19,8 +19,9 @@
         <tag>HEAD</tag>
     </scm>
     <properties>
-        <docker.dev.start.phase>test-compile</docker.dev.start.phase>
-        <docker.dev.prestop.phase>validate</docker.dev.prestop.phase>
+        <docker.dev.start.phase>pre-integration-test</docker.dev.start.phase>
+        <docker.dev.prestop.phase>post-integration-test</docker.dev.prestop.phase>
+        <docker.dev.stop.phase>post-integration-test</docker.dev.stop.phase>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -67,23 +68,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                
                 <configuration>
-                    <!--argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine-->
-                    <!-- Sets the VM argument line used when unit tests are run. -->
                     <argLine>${surefireArgLine}</argLine>
-                    
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                
                 <executions>
-                    <!--
-                        Ensures that both integration-test and verify goals of the Failsafe Maven
-                        plugin are executed.
-                    -->
                     <execution>
                         <id>integration-tests</id>
                         <goals>
@@ -91,14 +83,11 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <!-- Sets the VM argument line used when integration tests are run. -->
                             <argLine>${failsafeArgLine}</argLine>
-                            
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            
         </plugins>
     </build>
 
@@ -144,7 +133,7 @@
                             <images>
                                 <image>
                                     <alias>wildfly</alias>
-                                    <name>focusfish/wildfly-debug</name>
+                                    <name>focusfish/wildfly-debug:8.2.0</name>
                                     <run>
                                         <net>bridge</net>
                                         <namingStrategy>none</namingStrategy>
@@ -155,12 +144,12 @@
                                         </ports>
                                         <wait>
                                             <http>
-                                                <url>http://localhost:9990</url>
+                                                <url>http://localhost:28080</url>
                                                 <method>GET</method>
                                                 <status>200..399</status>
                                             </http>
                                             <!--log>WildFly 8.2.0.Final "Tweek" started in</log-->
-                                            <time>6000</time>
+                                            <time>30000</time>
                                             <kill>5000</kill>
                                             <shutdown>5000</shutdown>
                                         </wait>
