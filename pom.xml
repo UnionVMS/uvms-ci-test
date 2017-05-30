@@ -11,7 +11,7 @@
 
     <groupId>fish.focus.uvms.ci</groupId>
     <artifactId>uvms-ci-test</artifactId>
-    <version>1.0.17</version>
+    <version>1.0.18</version>
     <packaging>war</packaging>
     
     <scm>
@@ -20,7 +20,6 @@
     </scm>
     <properties>
         <docker.dev.start.phase>pre-integration-test</docker.dev.start.phase>
-        <docker.dev.prestop.phase>post-integration-test</docker.dev.prestop.phase>
         <docker.dev.stop.phase>post-integration-test</docker.dev.stop.phase>
     </properties>
     <dependencyManagement>
@@ -66,6 +65,13 @@
             </plugin>
             
             <plugin>
+                <groupId>com.e-gineering</groupId>
+                <artifactId>gitflow-helper-maven-plugin</artifactId>
+                <configuration>
+                    <stageDeploymentRepository>focus-stages::default::http://nexus.focus.fish/nexus/repository/stages::false</stageDeploymentRepository>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
@@ -93,43 +99,15 @@
 
     <profiles>
         <profile>
-            <id>docker2</id>
+            <id>docker</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>io.fabric8</groupId>
                         <artifactId>docker-maven-plugin</artifactId>
                         <version>0.21.0</version>
-                        <executions>
-                            <execution>
-                                <id>verifyallstopped</id>
-                                <phase>${docker.dev.prestop.phase}</phase>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                                <configuration>
-                                    <allContainers>true</allContainers>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>start</id>
-                                <phase>${docker.dev.start.phase}</phase>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>stop</id>
-                                <phase>${docker.dev.stop.phase}</phase>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                                <configuration>
-                                    <allContainers>true</allContainers>
-                                </configuration>
-                            </execution>
-                        </executions>
-                        <configuration>
+
+                        <configuration combine.self="override">
                             <images>
                                 <image>
                                     <alias>wildfly</alias>
