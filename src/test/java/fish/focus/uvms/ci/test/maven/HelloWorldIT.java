@@ -21,15 +21,15 @@ public class HelloWorldIT {
         final JavaArchive jar = ShrinkWrap.create(JavaArchive.class)
                 .addClasses(HelloWorld.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
-                
+
         System.out.println(jar.toString(true));
         return jar;
     }
 
     @Test
     public void helloIT() {
-        assertEquals(helloWorld.hello("world of IT "), "Hello world of IT ");
-
+        assertEquals("Hello world of IT", helloWorld.hello("world of IT"));
+        assertNotEquals("Hello world of it", helloWorld.hello("world of IT"));
     }
 
 }
