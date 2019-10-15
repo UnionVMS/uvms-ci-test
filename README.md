@@ -1,2 +1,3 @@
 # minimaven
+
 Mini maven project
