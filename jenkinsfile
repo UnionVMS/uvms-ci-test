@@ -19,8 +19,8 @@ pipeline {
   stages {
     stage('test') {
       steps {
-        VERSION = readMavenPom().getVersion()
-        echo "${VERSION}"
+        def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+        echo "${version}"
       }
     }
     stage('Remove docker containers') {
