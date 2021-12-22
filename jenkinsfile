@@ -17,6 +17,10 @@ pipeline {
     issueCommentTrigger('.*test me.*')
   }
   stages {
+    stage('test') {
+      pom = readMavenPom file: 'pom.xml'
+      echo pom.version
+    }
     stage('Remove docker containers') {
       when {
         expression { !params.RELEASE }
