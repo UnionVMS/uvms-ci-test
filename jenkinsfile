@@ -1,6 +1,10 @@
 def digit
 
-def version2 = "mvn help:evaluate -Dexpression=project.version -q -DforceStdout".execute().exitValue();
+def version
+node {
+  checkout scm
+  version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+}
 
 pipeline {
   agent any
@@ -10,7 +14,7 @@ pipeline {
   parameters {
     booleanParam(defaultValue: false, name: 'RELEASE', description: 'Create a release (This will only work from develop branch)')
     choice(choices: ['Incremental', 'Minor', 'Major'], name: 'RELEASE_TYPE', description: 'Type of release')
-    string(name: 'name', defaultValue: "${version2}")
+    string(name: 'name', defaultValue: version)
   }
   tools {
     maven 'Maven3'
