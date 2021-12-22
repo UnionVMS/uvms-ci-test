@@ -1,6 +1,6 @@
 def digit
 
-def version2 = "1";
+def version2 = "mvn help:evaluate -Dexpression=project.version -q -DforceStdout".execute().exitValue();
 
 pipeline {
   agent any
