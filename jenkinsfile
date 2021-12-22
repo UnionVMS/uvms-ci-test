@@ -1,6 +1,7 @@
 def digit
 
 def version
+
 node {
   checkout scm
   version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
@@ -24,14 +25,6 @@ pipeline {
     issueCommentTrigger('.*test me.*')
   }
   stages {
-    stage('test') {
-      steps {
-        script {
-          def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
-          echo "${version}"
-        }
-      }
-    }
     stage('Remove docker containers') {
       when {
         expression { !params.RELEASE }
