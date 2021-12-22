@@ -19,8 +19,10 @@ pipeline {
   stages {
     stage('test') {
       steps {
-        def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
-        echo "${version}"
+        script {
+          def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+          echo "${version}"
+        }
       }
     }
     stage('Remove docker containers') {
