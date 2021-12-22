@@ -1,6 +1,6 @@
 def digit
 
-def version2 = "1"
+def version2 = "1";
 
 pipeline {
   agent any
