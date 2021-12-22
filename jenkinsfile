@@ -18,8 +18,10 @@ pipeline {
   }
   stages {
     stage('test') {
-      VERSION = readMavenPom().getVersion()
-      echo "${VERSION}"
+      steps {
+        VERSION = readMavenPom().getVersion()
+        echo "${VERSION}"
+      }
     }
     stage('Remove docker containers') {
       when {
