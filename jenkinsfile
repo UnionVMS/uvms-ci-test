@@ -10,7 +10,7 @@ pipeline {
   parameters {
     booleanParam(defaultValue: false, name: 'RELEASE', description: 'Create a release (This will only work from develop branch)')
     choice(choices: ['Incremental', 'Minor', 'Major'], name: 'RELEASE_TYPE', description: 'Type of release')
-    string(name = 'name', defaultValue = 'test')
+    string(name: 'name', defaultValue: "${version2}")
   }
   tools {
     maven 'Maven3'
