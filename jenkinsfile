@@ -1,10 +1,9 @@
-def digit
-
 def version
 
 node {
   checkout scm
-  version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+  def currentVersion = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+  version = currentVersion.replace("-SNAPSHOT", "")
 }
 
 pipeline {
@@ -13,9 +12,8 @@ pipeline {
     lock resource: 'Docker'
   }
   parameters {
-    booleanParam(defaultValue: false, name: 'RELEASE', description: 'Create a release (This will only work from develop branch)')
-    choice(choices: ['Incremental', 'Minor', 'Major'], name: 'RELEASE_TYPE', description: 'Type of release')
-    string(name: 'name', defaultValue: version)
+    booleanParam(defaultValue: false, name: 'RELEASE', description: 'Create a release')
+    string(name: 'VERSION', defaultValue: version, description: 'Release version')
   }
   tools {
     maven 'Maven3'
@@ -62,26 +60,13 @@ pipeline {
         }
       }
       steps {
-        script {
-          switch (params.RELEASE_TYPE) {
-            case 'Incremental':
-              digit = 2
-              break
-            case 'Minor':
-              digit = 1
-              break
-            case 'Major':
-              digit = 0
-              break
-          }
-        }
         withCredentials([usernamePassword(credentialsId: 'bae67ea8-994c-429a-8a03-49b6ca0d3392', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
           sh "git config credential.username $GIT_USERNAME"
           sh 'git config credential.helper "!echo password=$GIT_PASSWORD; echo"'
         }
         git branch: 'master', url: "$GIT_URL"
         git branch: 'develop', url: "$GIT_URL"
-        sh "mvn -B gitflow:release -DskipTestProject -DversionDigitToIncrement=${digit} -DcommitDevelopmentVersionAtStart=true"
+        sh "mvn -B gitflow:release -DskipTestProject -DreleaseVersion=${VERSION}"
       }
     }
   }
