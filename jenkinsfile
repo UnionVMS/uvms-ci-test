@@ -59,8 +59,6 @@ pipeline {
         }
       }
       steps {
-        git branch: 'main'
-        git branch: 'develop'
         sh "mvn -B gitflow:release -DskipTestProject -DreleaseVersion=${VERSION}"
       }
     }
