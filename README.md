@@ -1,2 +1,2 @@
 # minimaven
-Mini maven project
+Mini maven project2
