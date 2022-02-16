@@ -59,11 +59,9 @@ pipeline {
         }
       }
       steps {
-        git branch: 'main', url: "$GIT_URL"
-        git branch: 'develop', url: "$GIT_URL"
-        configFileProvider([configFile(fileId: 'FOCUS Maven Settings', variable: 'MAVEN_SETTINGS')]) {
-          sh "mvn -s $MAVEN_SETTINGS -B gitflow:release -DskipTestProject -DreleaseVersion=${VERSION}"
-        }
+        git branch: 'main', url: "$GIT_URL", credentialsId: 'bae67ea8-994c-429a-8a03-49b6ca0d3392'
+        git branch: 'develop', url: "$GIT_URL", credentialsId: 'bae67ea8-994c-429a-8a03-49b6ca0d3392'
+        sh "mvn -B gitflow:release -DskipTestProject -DreleaseVersion=${VERSION}"
       }
     }
   }
