@@ -61,7 +61,7 @@ pipeline {
       steps {
         git branch: 'main', url: "$GIT_URL"
         git branch: 'develop', url: "$GIT_URL"
-        configFileProvider([configFile(fileId: 'FOCUS Maven Settings', variable: 'MAVEN_SETTINGS'))]) {
+        configFileProvider([configFile(fileId: 'FOCUS Maven Settings', variable: 'MAVEN_SETTINGS')]) {
           sh "mvn -s $MAVEN_SETTINGS -B gitflow:release -DskipTestProject -DreleaseVersion=${VERSION}"
         }
       }
