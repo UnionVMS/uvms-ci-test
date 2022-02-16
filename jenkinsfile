@@ -42,7 +42,7 @@ pipeline {
     }
     stage('Build main') {
       when {
-        not { branch 'main' }
+        branch 'main'
         expression { !params.RELEASE }
       }
       steps {
