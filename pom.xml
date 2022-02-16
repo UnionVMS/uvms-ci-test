@@ -58,7 +58,8 @@
                 <version>1.17.0</version>
                 <configuration>
                     <gitFlowConfig>
-                        <developmentBranch>dev</developmentBranch>
+                        <masterBranch>main</masterBranch>
+                        <developmentBranch>develop</developmentBranch>
                     </gitFlowConfig>
                 </configuration>
             </plugin>
