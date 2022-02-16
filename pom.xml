@@ -58,7 +58,7 @@
                 <version>1.17.0</version>
                 <configuration>
                     <gitFlowConfig>
-                        <masterBranch>main</masterBranch>
+                        <productionBranch>main</productionBranch>
                         <developmentBranch>develop</developmentBranch>
                     </gitFlowConfig>
                 </configuration>
