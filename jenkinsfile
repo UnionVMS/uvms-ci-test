@@ -1,5 +1,6 @@
 #!groovy
 @Library('uvms-jenkins@main') _
 uvmsJenkinsfile {
-  DOCKER = true
+  MAVEN_PROFILES = '-Pdocker,jacoco,postgres,publish-sql'
+  DOCKER         = true
 }
