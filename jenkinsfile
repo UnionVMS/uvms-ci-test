@@ -33,8 +33,10 @@ pipeline {
     }
     stage('Build') {
       when {
-        not { branch 'main' }
-        expression { !params.RELEASE }
+        allOf {
+          not { branch 'main' }
+          expression { !params.RELEASE }
+        }
       }
       steps {
         sh 'mvn clean deploy -Pdocker,jacoco,postgres,publish-sql -U'
@@ -42,8 +44,10 @@ pipeline {
     }
     stage('Build main') {
       when {
-        not { branch 'main' }
-        expression { !params.RELEASE }
+        allOf {
+          branch 'main'
+          expression { !params.RELEASE }
+        }
       }
       steps {
         sh 'mvn clean deploy -DskipTests -Ppostgres,publish-sql -U'
