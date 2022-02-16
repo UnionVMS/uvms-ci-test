@@ -17,7 +17,6 @@ pipeline {
   }
   tools {
     maven 'Maven3'
-    mavenSettingsConfig 'FOCUS Maven Settings'
     jdk 'JDK11'
   }
   triggers {
@@ -62,7 +61,9 @@ pipeline {
       steps {
         git branch: 'main', url: "$GIT_URL"
         git branch: 'develop', url: "$GIT_URL"
-        sh "mvn -B gitflow:release -DskipTestProject -DreleaseVersion=${VERSION}"
+        configFileProvider([configFile(fileId: 'FOCUS Maven Settings')]) {
+          sh "mvn -B gitflow:release -DskipTestProject -DreleaseVersion=${VERSION}"
+        }
       }
     }
   }
